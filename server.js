@@ -4,6 +4,9 @@
 // ==============================================================================
 
 var express = require("express");
+var path = require("path");
+
+
 
 // ==============================================================================
 // EXPRESS CONFIGURATION
@@ -26,8 +29,12 @@ app.use(express.json());
 // These routes give our server a "map" of how to respond when users visit or request data from various URLs.
 // ================================================================================
 
-require("./apiRoutes")(app);
-require("./htmlRoutes")(app);
+require("./public/apiRoutes")(app);
+require("./public/htmlRoutes")(app);
+
+// *******This is to make the CSS work properly********
+app.use(express.static(path.join(__dirname, 'public')));
+// *******************************************************
 
 // =============================================================================
 // LISTENER

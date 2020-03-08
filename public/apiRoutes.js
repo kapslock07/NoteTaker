@@ -3,8 +3,8 @@
 // We need to include the path package to get the correct file path for our html
 // ===============================================================================
 var path = require("path");
-var notesArray = require("./db/db");
-// var tableArray = require("./tableData");
+var notesArray = require("../db/db");
+var fs = require('fs');
 
 // ===============================================================================
 // ROUTING
@@ -22,14 +22,11 @@ module.exports = function (app) {
         return res.json(notesArray);
     });
 
-    // If no matching route is found default to home
-    app.get("*", function (req, res) {
-        res.sendFile(path.join(__dirname, "./public/index.html"));
-    });
+
 
     // Displays a single note, or returns false
-    app.get("/api/notes/:notes", function (req, res) {
-        var chosen = req.params.note;
+    app.get("/api/notes/:id", function (req, res) {
+        var chosen = req.params.id;
 
         console.log(chosen);
 
@@ -51,7 +48,7 @@ module.exports = function (app) {
     });
 
     // Delete Requests
-    app.delete("/api/notes/:notes", function (req, res) {
+    app.delete("/api/notes/:id", function (req, res) {
         res.send('Got a DELETE request at /notes')
     })
 };
