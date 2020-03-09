@@ -22,6 +22,9 @@ var PORT = process.env.PORT || 8080;
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// *******This is to make the CSS work properly********
+app.use(express.static(path.join(__dirname, 'public')));
+// *******************************************************
 
 // ================================================================================
 // ROUTER
@@ -31,10 +34,6 @@ app.use(express.json());
 
 require("./public/apiRoutes")(app);
 require("./public/htmlRoutes")(app);
-
-// *******This is to make the CSS work properly********
-app.use(express.static(path.join(__dirname, 'public')));
-// *******************************************************
 
 // =============================================================================
 // LISTENER
