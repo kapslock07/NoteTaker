@@ -43,13 +43,29 @@ module.exports = function (app) {
 
     app.post("/api/notes", function (req, res) {
         var newNote = req.body;
+
+        if (notesArray.length === 0) newNote.id = 1;
+        else newNote.id = notesArray[notesArray.length-1].id + 1;
+
         notesArray.push(newNote);
+
+        fs.writeFileSync("./db/db.json", JSON.stringify(notesArray));
+
         res.json(newNote);
     });
 
     // Delete Requests
     app.delete("/api/notes/:id", function (req, res) {
-        res.send('Got a DELETE request at /notes')
+        var id = parseInt(req.params.id);
+        console.log(id, notesArray)
+        notesArray = notesArray.filter(note => {
+            // console.log(id, note.id)
+            return id !== note.id
+        });
+
+        fs.writeFileSync("./db/db.json", JSON.stringify(notesArray));
+
+        res.json(true)
     })
 };
 
